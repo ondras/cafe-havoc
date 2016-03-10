@@ -21,5 +21,5 @@ $ make watch
 
 Two custom fonts are used:
 
-  - **Loar** for the verbose textual column,
-  - **Metrickal** for the map and nav bars.
+  - **[Lora](http://www.cyreal.org/2012/07/lora/)** for the verbose textual column,
+  - **[Metrickal](https://github.com/robey/metrickal-typeface)** for the map and nav bars.
