@@ -1881,7 +1881,7 @@ System.register("entity/library.js", ["./base.js", "level/level.js", "util/pubsu
 				function Plant(bg) {
 					_classCallCheck(this, Plant);
 
-					var name = ["ficus plant", "pot flower"].random();
+					var name = ["ficus plant", "orchid plant", "cactus", "pot flower"].random();
 
 					var c = ROT.Color.randomize([30, 180, 30], [10, 40, 10]);
 

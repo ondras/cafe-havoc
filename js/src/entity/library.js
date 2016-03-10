@@ -46,7 +46,7 @@ export class Storage extends Base {
 
 export class Plant extends Base {
 	constructor(bg) {
-		let name = ["ficus plant", "pot flower"].random();
+		let name = ["ficus plant", "orchid plant", "cactus", "pot flower"].random();
 
 		let c = ROT.Color.randomize([30, 180, 30], [10, 40, 10]);
 		super({ch:"\"", fg:ROT.Color.toRGB(c), bg, name});
