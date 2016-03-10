@@ -237,6 +237,11 @@ class Player extends Being {
 	}
 	
 	_chat(target) {
+		if (this._hasBadge("dumbness")) {
+			log.add("You try to speak but no sound can be heard! This is certainly caused by the badge you wear.");
+			return;
+		}
+
 		if (clock.isNight() && target instanceof Customer) {
 			let verb = ["screams", "cries", "howls", "growls"].random();
 			log.add(`You talk to %the. Instead of replying, %he ${verb} in anger!`, target, target);

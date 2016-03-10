@@ -5,7 +5,7 @@ import * as map from "ui/map.js";
 import * as log from "ui/log.js";
 
 function color() {
-	let base = [[65, 65, 65], [120, 100, 80]].random();
+	let base = [[70, 70, 70], [120, 100, 80]].random();
 	
 	let c = ROT.Color.randomize(base, 10);
 	return ROT.Color.toRGB(c);

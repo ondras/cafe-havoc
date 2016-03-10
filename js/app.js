@@ -1247,7 +1247,7 @@ System.register("entity/item/badge.js", ["./item.js"], function (_export, _conte
 
 				"time": {
 					name: "Badge of time dilation",
-					color: "#e8e"
+					color: "#e7e"
 				},
 
 				"regeneration": {
@@ -1263,6 +1263,11 @@ System.register("entity/item/badge.js", ["./item.js"], function (_export, _conte
 				"peace": {
 					name: "Badge of peace",
 					color: "#eee"
+				},
+
+				"dumbness": {
+					name: "Badge of dumbness",
+					color: "#7ee"
 				}
 			};
 
@@ -1772,7 +1777,7 @@ System.register("entity/library.js", ["./base.js", "level/level.js", "util/pubsu
 	}
 
 	function color() {
-		var base = [[65, 65, 65], [120, 100, 80]].random();
+		var base = [[70, 70, 70], [120, 100, 80]].random();
 
 		var c = ROT.Color.randomize(base, 10);
 		return ROT.Color.toRGB(c);
@@ -2506,6 +2511,11 @@ System.register("entity/player.js", ["util/xy.js", "./being.js", "./jenkins.js",
 				}, {
 					key: "_chat",
 					value: function _chat(target) {
+						if (this._hasBadge("dumbness")) {
+							log.add("You try to speak but no sound can be heard! This is certainly caused by the badge you wear.");
+							return;
+						}
+
 						if (clock.isNight() && target instanceof Customer) {
 							var verb = ["screams", "cries", "howls", "growls"].random();
 							log.add("You talk to %the. Instead of replying, %he " + verb + " in anger!", target, target);

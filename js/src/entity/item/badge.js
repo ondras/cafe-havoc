@@ -13,7 +13,7 @@ const TYPES = {
 
 	"time": {
 		name: "Badge of time dilation",
-		color: "#e8e"
+		color: "#e7e"
 	},
 
 	"regeneration": {
@@ -29,6 +29,11 @@ const TYPES = {
 	"peace": {
 		name: "Badge of peace",
 		color: "#eee"
+	},
+	
+	"dumbness": {
+		name: "Badge of dumbness",
+		color: "#7ee"
 	}
 }
 
