@@ -1250,14 +1250,19 @@ System.register("entity/item/badge.js", ["./item.js"], function (_export, _conte
 					color: "#e8e"
 				},
 
+				"regeneration": {
+					name: "Badge of random regeneration",
+					color: "#afa"
+				},
+
 				"visibility": {
 					name: "Badge of reduced visibility",
 					color: "#666"
 				},
 
-				"regeneration": {
-					name: "Badge of random regeneration",
-					color: "#afa"
+				"peace": {
+					name: "Badge of peace",
+					color: "#eee"
 				}
 			};
 
@@ -2513,6 +2518,11 @@ System.register("entity/player.js", ["util/xy.js", "./being.js", "./jenkins.js",
 				}, {
 					key: "_attack",
 					value: function _attack(target) {
+						if (this._hasBadge("peace")) {
+							log.add("You cannot bring yourself to attack anyone because of the badge you are wearing!");
+							return;
+						}
+
 						if (target instanceof Jenkins) {
 							log.add("Attacking you immediate superior is not a good idea!");
 							return true;
@@ -3716,7 +3726,7 @@ System.register("rules.js", [], function (_export, _context) {
 
       _export("AI_IDLE", AI_IDLE);
 
-      _export("REGENERATION", REGENERATION = .03);
+      _export("REGENERATION", REGENERATION = .04);
 
       _export("REGENERATION", REGENERATION);
 

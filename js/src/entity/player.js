@@ -248,6 +248,11 @@ class Player extends Being {
 	}
 	
 	_attack(target) {
+		if (this._hasBadge("peace")) {
+			log.add("You cannot bring yourself to attack anyone because of the badge you are wearing!");
+			return;
+		}
+		
 		if (target instanceof Jenkins) {
 			log.add("Attacking you immediate superior is not a good idea!");
 			return true;

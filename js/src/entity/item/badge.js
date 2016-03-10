@@ -16,14 +16,19 @@ const TYPES = {
 		color: "#e8e"
 	},
 
+	"regeneration": {
+		name: "Badge of random regeneration",
+		color: "#afa"
+	},
+
 	"visibility": {
 		name: "Badge of reduced visibility",
 		color: "#666"
 	},
 
-	"regeneration": {
-		name: "Badge of random regeneration",
-		color: "#afa"
+	"peace": {
+		name: "Badge of peace",
+		color: "#eee"
 	}
 }
 

@@ -8,5 +8,5 @@ export const COOK_SPAWN = .05;
 export const BADGE_SPAWN = .01;
 export const AI_RANGE = 7;
 export const AI_IDLE = .5;
-export const REGENERATION = .03;
+export const REGENERATION = .04;
 export const TICK_MINUTES = 1.5;
