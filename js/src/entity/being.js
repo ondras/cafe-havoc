@@ -107,7 +107,7 @@ export default class Being extends Base {
 		if (item == inv.badge) { inv.badge = null; }
 
 		if (!xy) { return; }
-		log.add("%A drop down %a.", this, item);
+		log.add("%A drop %a.", this, item);
 		this.level.items[xy] = item;
 	}
 	
