@@ -204,8 +204,8 @@ System.register("app.js", ["entity/player.js", "level/level.js", "ui/map.js", "a
 
 "use strict";
 
-System.register("clock.js", ["ui/log.js", "util/pubsub.js"], function (_export, _context) {
-	var log, pubsub, node, tickAmount, minutes, night, days;
+System.register("clock.js", ["ui/log.js", "util/pubsub.js", "rules.js"], function (_export, _context) {
+	var log, pubsub, rules, node, minutes, night, days;
 
 
 	function sync() {
@@ -243,7 +243,7 @@ System.register("clock.js", ["ui/log.js", "util/pubsub.js"], function (_export, 
 		if (minutes == null) {
 			return;
 		}
-		minutes += modifier * tickAmount;
+		minutes += modifier * rules.TICK_MINUTES;
 		sync();
 	}
 
@@ -259,10 +259,11 @@ System.register("clock.js", ["ui/log.js", "util/pubsub.js"], function (_export, 
 			log = _uiLogJs;
 		}, function (_utilPubsubJs) {
 			pubsub = _utilPubsubJs;
+		}, function (_rulesJs) {
+			rules = _rulesJs;
 		}],
 		execute: function () {
 			node = document.querySelector("#clock");
-			tickAmount = 1;
 			minutes = null;
 			night = false;
 			days = 0;
@@ -872,7 +873,7 @@ System.register("entity/cook.js", ["./being.js", "util/command.js", "ui/log.js",
 
 					var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Cook).call(this, visual));
 
-					_this.hp = 2;
+					_this.hp = 3;
 
 					_this._healed = false;
 					_this.angry = false;
@@ -1178,7 +1179,7 @@ System.register("entity/customer.js", ["./being.js", "util/command.js", "util/pu
 "use strict";
 
 System.register("entity/item/badge.js", ["./item.js"], function (_export, _context) {
-	var Item, TYPES, Badge;
+	var Item, _createClass, TYPES, Badge;
 
 	function _classCallCheck(instance, Constructor) {
 		if (!(instance instanceof Constructor)) {
@@ -1215,6 +1216,24 @@ System.register("entity/item/badge.js", ["./item.js"], function (_export, _conte
 			Item = _itemJs.default;
 		}],
 		execute: function () {
+			_createClass = function () {
+				function defineProperties(target, props) {
+					for (var i = 0; i < props.length; i++) {
+						var descriptor = props[i];
+						descriptor.enumerable = descriptor.enumerable || false;
+						descriptor.configurable = true;
+						if ("value" in descriptor) descriptor.writable = true;
+						Object.defineProperty(target, descriptor.key, descriptor);
+					}
+				}
+
+				return function (Constructor, protoProps, staticProps) {
+					if (protoProps) defineProperties(Constructor.prototype, protoProps);
+					if (staticProps) defineProperties(Constructor, staticProps);
+					return Constructor;
+				};
+			}();
+
 			TYPES = {
 				"basic": {
 					name: "Badge of the apprentice",
@@ -1228,12 +1247,32 @@ System.register("entity/item/badge.js", ["./item.js"], function (_export, _conte
 
 				"time": {
 					name: "Badge of time dilation",
+					color: "#e8e"
+				},
+
+				"visibility": {
+					name: "Badge of reduced visibility",
+					color: "#666"
+				},
+
+				"regeneration": {
+					name: "Badge of random regeneration",
 					color: "#afa"
 				}
 			};
 
 			Badge = function (_Item) {
 				_inherits(Badge, _Item);
+
+				_createClass(Badge, null, [{
+					key: "create",
+					value: function create() {
+						var list = Object.keys(TYPES).filter(function (str) {
+							return str != "basic";
+						});
+						return new this(list.random());
+					}
+				}]);
 
 				function Badge(type) {
 					_classCallCheck(this, Badge);
@@ -1695,7 +1734,7 @@ System.register("entity/jenkins.js", ["./being.js", "entity/item/badge.js", "ui/
 "use strict";
 
 System.register("entity/library.js", ["./base.js", "level/level.js", "util/pubsub.js", "ui/map.js", "ui/log.js"], function (_export, _context) {
-	var Base, BaseLevel, pubsub, map, log, _createClass, Floor, Table, Storage, Wall, WallCorner, WallH, WallV, Door, DoorHome, Staircase;
+	var Base, BaseLevel, pubsub, map, log, _createClass, Floor, Table, Storage, Plant, Wall, WallCorner, WallH, WallV, Door, DoorHome, Staircase;
 
 	function _classCallCheck(instance, Constructor) {
 		if (!(instance instanceof Constructor)) {
@@ -1836,8 +1875,29 @@ System.register("entity/library.js", ["./base.js", "level/level.js", "util/pubsu
 
 			_export("Storage", Storage);
 
-			_export("Wall", Wall = function (_Base4) {
-				_inherits(Wall, _Base4);
+			_export("Plant", Plant = function (_Base4) {
+				_inherits(Plant, _Base4);
+
+				function Plant(bg) {
+					_classCallCheck(this, Plant);
+
+					var name = ["ficus plant", "pot flower"].random();
+
+					var c = ROT.Color.randomize([30, 180, 30], [10, 40, 10]);
+
+					var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Plant).call(this, { ch: "\"", fg: ROT.Color.toRGB(c), bg: bg, name: name }));
+
+					_this4.blocks = true;
+					return _this4;
+				}
+
+				return Plant;
+			}(Base));
+
+			_export("Plant", Plant);
+
+			_export("Wall", Wall = function (_Base5) {
+				_inherits(Wall, _Base5);
 
 				function Wall(visual) {
 					_classCallCheck(this, Wall);
@@ -1845,10 +1905,10 @@ System.register("entity/library.js", ["./base.js", "level/level.js", "util/pubsu
 					visual.fg = "#555";
 					visual.name = "wall";
 
-					var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Wall).call(this, visual));
+					var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(Wall).call(this, visual));
 
-					_this4.blocks = true;
-					return _this4;
+					_this5.blocks = true;
+					return _this5;
 				}
 
 				return Wall;
@@ -1898,18 +1958,18 @@ System.register("entity/library.js", ["./base.js", "level/level.js", "util/pubsu
 
 			_export("WallV", WallV);
 
-			_export("Door", Door = function (_Base5) {
-				_inherits(Door, _Base5);
+			_export("Door", Door = function (_Base6) {
+				_inherits(Door, _Base6);
 
 				function Door(xy, bg) {
 					_classCallCheck(this, Door);
 
-					var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(Door).call(this, { fg: "#a50", bg: bg }));
+					var _this9 = _possibleConstructorReturn(this, Object.getPrototypeOf(Door).call(this, { fg: "#a50", bg: bg }));
 
-					_this8.xy = xy;
-					_this8.close();
-					_this8.locked = false;
-					return _this8;
+					_this9.xy = xy;
+					_this9.close();
+					_this9.locked = false;
+					return _this9;
 				}
 
 				_createClass(Door, [{
@@ -1965,11 +2025,11 @@ System.register("entity/library.js", ["./base.js", "level/level.js", "util/pubsu
 				function DoorHome(xy, bg) {
 					_classCallCheck(this, DoorHome);
 
-					var _this9 = _possibleConstructorReturn(this, Object.getPrototypeOf(DoorHome).call(this, xy, bg));
+					var _this10 = _possibleConstructorReturn(this, Object.getPrototypeOf(DoorHome).call(this, xy, bg));
 
-					_this9.visual.fg = "#da2";
-					_this9.lock();
-					return _this9;
+					_this10.visual.fg = "#da2";
+					_this10.lock();
+					return _this10;
 				}
 
 				_createClass(DoorHome, [{
@@ -1985,8 +2045,8 @@ System.register("entity/library.js", ["./base.js", "level/level.js", "util/pubsu
 
 			_export("DoorHome", DoorHome);
 
-			_export("Staircase", Staircase = function (_Base6) {
-				_inherits(Staircase, _Base6);
+			_export("Staircase", Staircase = function (_Base7) {
+				_inherits(Staircase, _Base7);
 
 				function Staircase(up, bg) {
 					_classCallCheck(this, Staircase);
@@ -1998,32 +2058,32 @@ System.register("entity/library.js", ["./base.js", "level/level.js", "util/pubsu
 						name: "staircase leading " + (up ? "up" : "down")
 					};
 
-					var _this10 = _possibleConstructorReturn(this, Object.getPrototypeOf(Staircase).call(this, visual));
+					var _this11 = _possibleConstructorReturn(this, Object.getPrototypeOf(Staircase).call(this, visual));
 
-					_this10._up = up;
-					_this10.target = {
+					_this11._up = up;
+					_this11.target = {
 						level: null,
 						xy: null
 					};
-					return _this10;
+					return _this11;
 				}
 
 				_createClass(Staircase, [{
 					key: "enter",
 					value: function enter(currentLevel, currentXY) {
-						var _this11 = this;
+						var _this12 = this;
 
 						if (!this.target.level) {
 							(function () {
 								/* generate and connect */
-								var level = new BaseLevel(!_this11._up);
-								_this11.target.level = level;
+								var level = new BaseLevel(!_this12._up);
+								_this12.target.level = level;
 
-								var type = _this11._up ? "staircase-down" : "staircase-up";
+								var type = _this12._up ? "staircase-down" : "staircase-up";
 								var room = level.rooms.filter(function (room) {
 									return room.type == type;
 								})[0];
-								_this11.target.xy = room.getCenter();
+								_this12.target.xy = room.getCenter();
 
 								var opposite = level.cells[room.getCenter()];
 								opposite.target.level = currentLevel;
@@ -2199,8 +2259,7 @@ System.register("entity/player.js", ["util/xy.js", "./being.js", "./jenkins.js",
 						}
 
 						var modifier = 2;
-						var badge = this.inventory.badge;
-						if (badge && badge.badgeType == "time") {
+						if (this._hasBadge("time")) {
 							modifier = 1;
 						}
 						clock.tick(modifier);
@@ -2208,6 +2267,11 @@ System.register("entity/player.js", ["util/xy.js", "./being.js", "./jenkins.js",
 						if (this._days == 3) {
 							stats.showGameOver(true);
 							return new Promise(function () {});
+						}
+
+						if (this._hasBadge("regeneration") && this.hp < rules.PLAYER_HP && ROT.RNG.getUniform() < rules.REGENERATION) {
+							this.hp++;
+							this.updateHealth();
 						}
 
 						stats.addTurn();
@@ -2266,7 +2330,12 @@ System.register("entity/player.js", ["util/xy.js", "./being.js", "./jenkins.js",
 								if (!this.xy) {
 									return;
 								}
-								var visibleRooms = this.level.getVisibleRooms(this.xy);
+								var visibleRooms = [];
+								if (this._hasBadge("visibility")) {
+									visibleRooms = this.level.getRoomsAt(this.xy);
+								} else {
+									visibleRooms = this.level.getVisibleRooms(this.xy);
+								}
 								map.setVisibleRooms(visibleRooms);
 								break;
 
@@ -2313,6 +2382,11 @@ System.register("entity/player.js", ["util/xy.js", "./being.js", "./jenkins.js",
 						var full = new Array(this.hp + 1).join("*");
 						var empty = new Array(rules.PLAYER_HP - this.hp + 1).join("*");
 						this._node.innerHTML = "Health: <span class=\"full\">" + full + "</span><span class=\"empty\">" + empty + "</span>";
+					}
+				}, {
+					key: "_hasBadge",
+					value: function _hasBadge(type) {
+						return this.inventory.badge && this.inventory.badge.badgeType == type;
 					}
 				}, {
 					key: "_bump",
@@ -2471,8 +2545,7 @@ System.register("entity/player.js", ["util/xy.js", "./being.js", "./jenkins.js",
 							// attack success
 
 							var amount = 1;
-							var badge = this.inventory.badge;
-							if (badge && badge.badgeType == "damage") {
+							if (this._hasBadge("damage")) {
 								amount = 2;
 							}
 
@@ -2482,6 +2555,11 @@ System.register("entity/player.js", ["util/xy.js", "./being.js", "./jenkins.js",
 							} else {
 								log.add("You hit %him and kill %him!", target, target);
 								stats.addKill();
+							}
+
+							if (ROT.RNG.getUniform() < rules.ITEM_DESTRUCT) {
+								this.dropItem(item);
+								log.add("Unfortunately, your %s is destroyed during the vicious fight.", item);
 							}
 						}
 						return true;
@@ -2528,6 +2606,27 @@ System.register("entity/player.js", ["util/xy.js", "./being.js", "./jenkins.js",
 System.register("level/decorator.js", ["util/xy.js", "entity/customer.js", "entity/jenkins.js", "entity/cook.js", "entity/item/badge.js", "entity/library.js", "entity/item/library.js", "rules.js"], function (_export, _context) {
 	var XY, Customer, Jenkins, Cook, Badge, entities, items, rules;
 
+
+	function carvePlants(room, level, bg) {
+		room.forEach(function (xy) {
+			var entity = level.getEntityAt(xy);
+			if (entity.blocks) {
+				return;
+			}
+
+			var local = xy.minus(room.position);
+
+			var left = local.x == 1;
+			var right = local.x == room.size.x - 1;
+			var top = local.y == 1;
+			var bottom = local.y == room.size.y - 1;
+			var corner = (left || right) && (top || bottom);
+
+			if (corner && ROT.RNG.getUniform() < 0.3) {
+				level.cells[xy] = new entities.Plant(bg);
+			}
+		});
+	}
 
 	function carveDoor(room, level, bg, edge) {
 		var otherRoom = room.neighbors[edge];
@@ -2708,6 +2807,8 @@ System.register("level/decorator.js", ["util/xy.js", "entity/customer.js", "enti
 						customer.moveTo(cxy, level);
 					});
 				});
+
+				carvePlants(room, level, bg);
 			};
 
 			carve.kitchen = function (room, level, bg) {
@@ -2746,10 +2847,12 @@ System.register("level/decorator.js", ["util/xy.js", "entity/customer.js", "enti
 					var cook = new Cook();
 					cook.moveTo(xy, level);
 				});
+
+				carvePlants(room, level, bg);
 			};
 
 			carve.corridor = function (room, level, bg) {
-				carve.random(room, level);
+				carve.random(room, level, bg);
 			};
 
 			carve.storage = function (room, level, bg) {
@@ -2793,6 +2896,8 @@ System.register("level/decorator.js", ["util/xy.js", "entity/customer.js", "enti
 
 					level.items[xy] = items.create();
 				});
+
+				carvePlants(room, level, bg);
 			};
 
 			carve.wc = function (room, level, bg) {
@@ -2899,7 +3004,7 @@ System.register("level/decorator.js", ["util/xy.js", "entity/customer.js", "enti
 					}
 				}
 
-				carve.random(room, level);
+				carve.random(room, level, bg);
 			};
 
 			carve.smoking = function (room, level, bg) {
@@ -2914,7 +3019,7 @@ System.register("level/decorator.js", ["util/xy.js", "entity/customer.js", "enti
 					level.cells[xy] = chair;
 				});
 
-				carve.random(room, level);
+				carve.random(room, level, bg);
 			};
 
 			carve.intro = function (room, level, bg) {
@@ -2958,9 +3063,13 @@ System.register("level/decorator.js", ["util/xy.js", "entity/customer.js", "enti
 				desk.visual.name = "desk";
 				xy = xy.plus(corner);
 				level.cells[xy] = desk;
+
+				carvePlants(room, level, bg);
 			};
 
-			carve.random = function (room, level) {
+			carve.random = function (room, level, bg) {
+				carvePlants(room, level, bg);
+
 				room.forEach(function (xy) {
 					var entity = level.getEntityAt(xy);
 					if (entity.blocks) {
@@ -2972,24 +3081,25 @@ System.register("level/decorator.js", ["util/xy.js", "entity/customer.js", "enti
 						customer.moveTo(xy, level);
 					} else if (ROT.RNG.getUniform() < rules.ITEM_SPAWN_RANDOM) {
 						level.items[xy] = items.create();
+					} else if (ROT.RNG.getUniform() < rules.BADGE_SPAWN) {
+						level.items[xy] = Badge.create();
 					}
 				});
 			};
 
 			carve["staircase-up"] = function (room, level, bg) {
+				carvePlants(room, level, bg);
 				carveStaircase(room, level, bg, true);
 			};
 
 			carve["staircase-down"] = function (room, level, bg) {
+				carvePlants(room, level, bg);
 				carveStaircase(room, level, bg, false);
 			};
 
-			carve["badge-damage"] = function (room, level, bg) {
-				level.items[room.getCenter()] = new Badge("damage");
-			};
-
-			carve["badge-time"] = function (room, level, bg) {
-				level.items[room.getCenter()] = new Badge("time");
+			carve["badge"] = function (room, level, bg) {
+				carvePlants(room, level, bg);
+				level.items[room.getCenter()] = Badge.create();
 			};
 
 			_export("default", decorate);
@@ -3237,7 +3347,7 @@ System.register("level/level.js", ["./generator.js", "./decorator.js", "util/xy.
 					leaf1.type = "staircase-" + (up ? "up" : "down");
 
 					var leaf2 = findFurthest(_this.rooms, leaf1);
-					leaf2.type = "badge-" + (up ? "damage" : "time");
+					leaf2.type = "badge";
 
 					decorator(_this.rooms, _this);
 					return _this;
@@ -3562,7 +3672,7 @@ System.register("level/room.js", ["util/xy.js"], function (_export, _context) {
 "use strict";
 
 System.register("rules.js", [], function (_export, _context) {
-  var PLAYER_HP, CUSTOMER_SPAWN_TABLE, CUSTOMER_SPAWN_RANDOM, ITEM_SPAWN_STORAGE, ITEM_SPAWN_RANDOM, COOK_SPAWN, AI_RANGE, AI_IDLE;
+  var PLAYER_HP, CUSTOMER_SPAWN_TABLE, CUSTOMER_SPAWN_RANDOM, ITEM_SPAWN_STORAGE, ITEM_SPAWN_RANDOM, ITEM_DESTRUCT, COOK_SPAWN, BADGE_SPAWN, AI_RANGE, AI_IDLE, REGENERATION, TICK_MINUTES;
   return {
     setters: [],
     execute: function () {
@@ -3578,25 +3688,41 @@ System.register("rules.js", [], function (_export, _context) {
 
       _export("CUSTOMER_SPAWN_RANDOM", CUSTOMER_SPAWN_RANDOM);
 
-      _export("ITEM_SPAWN_STORAGE", ITEM_SPAWN_STORAGE = .2);
+      _export("ITEM_SPAWN_STORAGE", ITEM_SPAWN_STORAGE = .1);
 
       _export("ITEM_SPAWN_STORAGE", ITEM_SPAWN_STORAGE);
 
-      _export("ITEM_SPAWN_RANDOM", ITEM_SPAWN_RANDOM = .05);
+      _export("ITEM_SPAWN_RANDOM", ITEM_SPAWN_RANDOM = .04);
 
       _export("ITEM_SPAWN_RANDOM", ITEM_SPAWN_RANDOM);
+
+      _export("ITEM_DESTRUCT", ITEM_DESTRUCT = .5);
+
+      _export("ITEM_DESTRUCT", ITEM_DESTRUCT);
 
       _export("COOK_SPAWN", COOK_SPAWN = .05);
 
       _export("COOK_SPAWN", COOK_SPAWN);
 
-      _export("AI_RANGE", AI_RANGE = 5);
+      _export("BADGE_SPAWN", BADGE_SPAWN = .01);
+
+      _export("BADGE_SPAWN", BADGE_SPAWN);
+
+      _export("AI_RANGE", AI_RANGE = 7);
 
       _export("AI_RANGE", AI_RANGE);
 
       _export("AI_IDLE", AI_IDLE = .5);
 
       _export("AI_IDLE", AI_IDLE);
+
+      _export("REGENERATION", REGENERATION = .03);
+
+      _export("REGENERATION", REGENERATION);
+
+      _export("TICK_MINUTES", TICK_MINUTES = 1.5);
+
+      _export("TICK_MINUTES", TICK_MINUTES);
     }
   };
 });

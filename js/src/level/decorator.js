@@ -7,6 +7,25 @@ import * as entities from "entity/library.js";
 import * as items from "entity/item/library.js";
 import * as rules from "rules.js";
 
+function carvePlants(room, level, bg) {
+	room.forEach(xy => {
+		let entity = level.getEntityAt(xy);
+		if (entity.blocks) { return; }
+		
+		let local = xy.minus(room.position);
+
+		let left = (local.x == 1);
+		let right = (local.x == room.size.x-1);
+		let top = (local.y == 1);
+		let bottom = (local.y == room.size.y-1);
+		let corner = (left || right) && (top || bottom); 
+		
+		if (corner && ROT.RNG.getUniform() < 0.3) {
+			level.cells[xy] = new entities.Plant(bg);
+		}
+	});
+}
+
 function carveDoor(room, level, bg, edge) {
 	let otherRoom = room.neighbors[edge];
 	let a = 0, b = 0;
@@ -156,6 +175,8 @@ carve.dining = function(room, level, bg) {
 			customer.moveTo(cxy, level);
 		});
 	});
+
+	carvePlants(room, level, bg);
 }
 
 carve.kitchen = function(room, level, bg) {
@@ -187,10 +208,12 @@ carve.kitchen = function(room, level, bg) {
 		let cook = new Cook();
 		cook.moveTo(xy, level);
 	});
+
+	carvePlants(room, level, bg);
 }
 
 carve.corridor = function(room, level, bg) {
-	carve.random(room, level);
+	carve.random(room, level, bg);
 }
 
 carve.storage = function(room, level, bg) {
@@ -227,6 +250,8 @@ carve.storage = function(room, level, bg) {
 
 		level.items[xy] = items.create();
 	});
+
+	carvePlants(room, level, bg);
 }
 
 carve.wc = function(room, level, bg) {
@@ -326,7 +351,7 @@ carve.pool = function(room, level, bg) {
 		}
 	}
 
-	carve.random(room, level);
+	carve.random(room, level, bg);
 }
 
 carve.smoking = function(room, level, bg) {
@@ -346,7 +371,7 @@ carve.smoking = function(room, level, bg) {
 		level.cells[xy] = chair;
 	});
 
-	carve.random(room, level);
+	carve.random(room, level, bg);
 }
 
 carve.intro = function(room, level, bg) {
@@ -385,9 +410,13 @@ carve.center = function(room, level, bg) {
 	desk.visual.name = "desk";
 	xy = xy.plus(corner);
 	level.cells[xy] = desk;
+
+	carvePlants(room, level, bg);
 }
 
-carve.random = function(room, level) {
+carve.random = function(room, level, bg) {
+	carvePlants(room, level, bg);
+
 	room.forEach(xy => {
 		let entity = level.getEntityAt(xy);
 		if (entity.blocks) { return; }
@@ -397,24 +426,25 @@ carve.random = function(room, level) {
 			customer.moveTo(xy, level);
 		} else if (ROT.RNG.getUniform() < rules.ITEM_SPAWN_RANDOM) {
 			level.items[xy] = items.create();
+		} else if (ROT.RNG.getUniform() < rules.BADGE_SPAWN) {
+			level.items[xy] = Badge.create();
 		}
 	});
 }
 
 carve["staircase-up"] = function(room, level, bg) {
+	carvePlants(room, level, bg);
 	carveStaircase(room, level, bg, true);
 }
 
 carve["staircase-down"] = function(room, level, bg) {
+	carvePlants(room, level, bg);
 	carveStaircase(room, level, bg, false);
 }
 
-carve["badge-damage"] = function(room, level, bg) {
-	level.items[room.getCenter()] = new Badge("damage");
-}
-
-carve["badge-time"] = function(room, level, bg) {
-	level.items[room.getCenter()] = new Badge("time");
+carve["badge"] = function(room, level, bg) {
+	carvePlants(room, level, bg);
+	level.items[room.getCenter()] = Badge.create();
 }
 
 export default decorate;

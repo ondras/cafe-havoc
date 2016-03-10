@@ -1,8 +1,12 @@
 export const PLAYER_HP = 10;
 export const CUSTOMER_SPAWN_TABLE = .2;
 export const CUSTOMER_SPAWN_RANDOM = .05;
-export const ITEM_SPAWN_STORAGE = .2;
-export const ITEM_SPAWN_RANDOM = .05;
+export const ITEM_SPAWN_STORAGE = .1;
+export const ITEM_SPAWN_RANDOM = .04;
+export const ITEM_DESTRUCT = .5;
 export const COOK_SPAWN = .05;
-export const AI_RANGE = 5;
+export const BADGE_SPAWN = .01;
+export const AI_RANGE = 7;
 export const AI_IDLE = .5;
+export const REGENERATION = .03;
+export const TICK_MINUTES = 1.5;

@@ -43,13 +43,17 @@ class Player extends Being {
 		}
 
 		let modifier = 2;
-		let badge = this.inventory.badge;
-		if (badge && badge.badgeType == "time") { modifier = 1; }
+		if (this._hasBadge("time")) { modifier = 1; }
 		clock.tick(modifier);
 		
 		if (this._days == 3) {
 			stats.showGameOver(true);
 			return new Promise(() => {}); 
+		}
+		
+		if (this._hasBadge("regeneration") && this.hp < rules.PLAYER_HP && ROT.RNG.getUniform() < rules.REGENERATION) {
+			this.hp++;
+			this.updateHealth();
 		}
 
 		stats.addTurn();
@@ -94,7 +98,12 @@ class Player extends Being {
 		switch (message) {
 			case "visibility-change":
 				if (!this.xy) { return; }
-				let visibleRooms = this.level.getVisibleRooms(this.xy);
+				let visibleRooms = [];
+				if (this._hasBadge("visibility")) {
+					visibleRooms = this.level.getRoomsAt(this.xy);
+				} else {
+					visibleRooms = this.level.getVisibleRooms(this.xy);
+				}
 				map.setVisibleRooms(visibleRooms);
 			break;
 			
@@ -133,6 +142,10 @@ class Player extends Being {
 		let full = new Array(this.hp+1).join("*");
 		let empty = new Array(rules.PLAYER_HP - this.hp + 1).join("*");
 		this._node.innerHTML = `Health: <span class="full">${full}</span><span class="empty">${empty}</span>`;
+	}
+	
+	_hasBadge(type) {
+		return (this.inventory.badge && this.inventory.badge.badgeType == type);
 	}
 
 	_bump(dxy) {
@@ -263,8 +276,7 @@ class Player extends Being {
 		} else { // attack success
 
 			let amount = 1;
-			let badge = this.inventory.badge;
-			if (badge && badge.badgeType == "damage") { amount = 2; }
+			if (this._hasBadge("damage")) { amount = 2; }
 
 			target.damage(amount);
 			if (target.hp > 0) {
@@ -272,6 +284,11 @@ class Player extends Being {
 			} else {
 				log.add("You hit %him and kill %him!", target, target);
 				stats.addKill();
+			}
+			
+			if (ROT.RNG.getUniform() < rules.ITEM_DESTRUCT) {
+				this.dropItem(item);
+				log.add("Unfortunately, your %s is destroyed during the vicious fight.", item);
 			}
 		}
 		return true;

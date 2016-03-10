@@ -78,7 +78,7 @@ export class BaseLevel extends Level {
 		leaf1.type = `staircase-${up ? "up" : "down"}`;
 
 		let leaf2 = findFurthest(this.rooms, leaf1);
-		leaf2.type = `badge-${up ? "damage" : "time"}`;
+		leaf2.type = "badge";
 
 		decorator(this.rooms, this);
 	}

@@ -1,8 +1,8 @@
 import * as log from "ui/log.js";
 import * as pubsub from "util/pubsub.js";
+import * as rules from "rules.js";
 
 const node = document.querySelector("#clock");
-const tickAmount = 1;
 let minutes = null;
 let night = false;
 let days = 0;
@@ -36,7 +36,7 @@ function isNight() {
 
 function tick(modifier) {
 	if (minutes == null) { return; }
-	minutes += modifier * tickAmount;
+	minutes += modifier * rules.TICK_MINUTES;
 	sync();
 }
 

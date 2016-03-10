@@ -44,6 +44,16 @@ export class Storage extends Base {
 	}
 }
 
+export class Plant extends Base {
+	constructor(bg) {
+		let name = ["ficus plant", "pot flower"].random();
+
+		let c = ROT.Color.randomize([30, 180, 30], [10, 40, 10]);
+		super({ch:"\"", fg:ROT.Color.toRGB(c), bg, name});
+		this.blocks = true;
+	}
+}
+
 export class Wall extends Base {
 	constructor(visual) {
 		visual.fg = "#555";

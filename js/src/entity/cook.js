@@ -13,7 +13,7 @@ export default class Cook extends Being {
 		}
 		super(visual);
 
-		this.hp = 2;
+		this.hp = 3;
 
 		this._healed = false;
 		this.angry = false;
