@@ -4265,7 +4265,7 @@ System.register("ui/map.js", ["util/xy.js", "util/command.js", "actors.js", "ent
 			options = {
 				width: 1,
 				height: 1,
-				fontSize: 20,
+				fontSize: 22,
 				fontFamily: "metrickal, droid sans mono, monospace"
 			};
 			display = new ROT.Display(options);

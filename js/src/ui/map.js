@@ -7,7 +7,7 @@ let level = null;
 let options = {
 	width: 1,
 	height: 1,
-	fontSize: 20,
+	fontSize: 22,
 	fontFamily: "metrickal, droid sans mono, monospace"
 }
 let display = new ROT.Display(options);
