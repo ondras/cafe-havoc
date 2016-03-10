@@ -1,0 +1,22 @@
+#log {
+	position: absolute;
+	right: 0;
+	bottom: 2*@line-height-em;
+	width: @log-width;
+	padding: 0 0.5ch;
+
+	font-family: lora;
+	
+	&::before {
+		content: "";
+		position: fixed;
+		left: 0;
+		top: 0;
+		width: 100%;
+		box-shadow: 0 0 1em 1em black;
+	}
+	
+	.tutorial {
+		color: #da2;
+	}
+}

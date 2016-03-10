@@ -1,0 +1,30 @@
+#gameover {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	padding: 2em;
+	background-color: rgba(0, 0, 0, 0.8);
+	
+	table {
+		margin-bottom: @line-height-em;
+
+		th, td {
+			padding: 0 1ch @line-height-em 0;
+		}
+		
+		th, .deliveries, .kills, .turns, .time {
+			font-weight: normal;
+			color: #fff;
+		}
+		
+		.alive {
+			color: #0f0;
+		}
+
+		.dead {
+			color: #f00;
+		}
+	}
+}

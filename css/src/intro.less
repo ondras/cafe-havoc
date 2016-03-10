@@ -1,0 +1,50 @@
+#intro {
+	position: fixed;
+	font-size: 2.4vh;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: #000;
+	
+	& ~ * {
+		visibility: hidden;
+	}
+	
+	a {
+		color: #fff;
+		&:not(:hover) {
+			text-decoration: none;
+		}
+	}
+	
+	pre {
+		text-align: center;
+		color: #888;
+		
+		em {
+			font-style: normal;
+			color: #fff;
+		}
+		
+		i {
+			font-style: normal;
+			animation: fade 3s 1s alternate infinite both;
+		}
+		
+		em.blink {
+			color: #ff3;
+			animation: blink 3s alternate infinite both;
+		}
+	}
+}
+
+@keyframes blink {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes fade {
+	from { color: #000; }
+	to { color: #c00; }
+}

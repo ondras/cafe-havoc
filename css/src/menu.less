@@ -1,0 +1,45 @@
+ul {
+	position: fixed;
+	left: 0;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	
+	li {
+		display: inline-block;
+		white-space: nowrap;
+		
+		em {
+			font-style: normal;
+			color: #fff;
+		}
+		
+		&.active {
+			background-color: #2a2a2a;
+		}
+	}
+	
+	&#inventory {
+		bottom: 0;
+		counter-reset: inv;
+		
+		li {
+			width: 12.5%;
+			counter-increment: inv;
+			
+			&:not(:empty)::before {
+				content: counter(inv) " ";
+				color: #fff;
+			}
+		}
+	}
+	
+	&#bump {
+		bottom: @line-height-em;
+		
+		li + li {
+			padding: 0 1ch;
+		}
+	}
+}

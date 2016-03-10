@@ -1,0 +1,63 @@
+@import url(https://fonts.googleapis.com/css?family=Lora:400,400italic,700italic,700);
+
+@font-face {
+	font-family: Metrickal;
+	src: url(Metrickal-Regular.otf);
+}
+
+@log-width: 40%;
+@line-height: 1.3;
+@line-height-em: unit(@line-height, em);
+
+html, body {
+	height: 100%;
+}
+
+body {
+	color: #aaa;
+	background-color: #000;
+	font-size: 19px;
+	font-family: Metrickal, droid sans mono, monospace;
+	line-height: @line-height;
+	margin: 0;
+	box-sizing: border-box;
+
+	&.night * {
+		border-color: red !important;
+	}
+}
+
+footer {
+	border-top: 1px solid gray;
+}
+
+* {
+	box-sizing: inherit;
+	transition: opacity 1000ms;
+}
+
+.hidden {
+	opacity: 0;
+}
+
+@import "log.less";
+@import "menu.less";
+@import "map.less";
+@import "intro.less";
+@import "gameover.less";
+
+@media (max-width: 1290px) {
+	body { font-size: 18px; }
+}
+
+@media (max-width: 1170px) {
+	body { font-size: 16px; }
+}
+
+@media (max-width: 1070px) {
+	body { font-size: 15px; }
+}
+
+@media (max-width: 960px) {
+	body { font-size: 13px; }
+}

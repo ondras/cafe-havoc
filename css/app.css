@@ -1,0 +1,223 @@
+@import url(https://fonts.googleapis.com/css?family=Lora:400,400italic,700italic,700);
+@font-face {
+  font-family: Metrickal;
+  src: url(Metrickal-Regular.otf);
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  color: #aaa;
+  background-color: #000;
+  font-size: 19px;
+  font-family: Metrickal, droid sans mono, monospace;
+  line-height: 1.3;
+  margin: 0;
+  box-sizing: border-box;
+}
+body.night * {
+  border-color: red !important;
+}
+footer {
+  border-top: 1px solid gray;
+}
+* {
+  box-sizing: inherit;
+  transition: opacity 1000ms;
+}
+.hidden {
+  opacity: 0;
+}
+#log {
+  position: absolute;
+  right: 0;
+  bottom: 2.6em;
+  width: 40%;
+  padding: 0 0.5ch;
+  font-family: lora;
+}
+#log::before {
+  content: "";
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 0 1em 1em black;
+}
+#log .tutorial {
+  color: #da2;
+}
+ul {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+ul li {
+  display: inline-block;
+  white-space: nowrap;
+}
+ul li em {
+  font-style: normal;
+  color: #fff;
+}
+ul li.active {
+  background-color: #2a2a2a;
+}
+ul#inventory {
+  bottom: 0;
+  counter-reset: inv;
+}
+ul#inventory li {
+  width: 12.5%;
+  counter-increment: inv;
+}
+ul#inventory li:not(:empty)::before {
+  content: counter(inv) " ";
+  color: #fff;
+}
+ul#bump {
+  bottom: 1.3em;
+}
+ul#bump li + li {
+  padding: 0 1ch;
+}
+#map {
+  position: relative;
+  overflow: hidden;
+  width: calc(60%);
+  height: calc(100% - 2*1.3em - 1px);
+  border-right: 1px solid gray;
+}
+#map canvas {
+  position: absolute;
+}
+#map::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  box-shadow: inset 0 0 1em 1em #000;
+}
+#map #status {
+  position: absolute;
+  z-index: 1;
+  right: 0.5ch;
+  top: 0;
+  background-color: #000;
+  box-shadow: 0 0 1em 1em #000;
+}
+#map #status #health {
+  white-space: pre;
+}
+#map #status #health span.full {
+  color: #0f0;
+}
+#map #status #health span.empty {
+  color: #050;
+}
+#intro {
+  position: fixed;
+  font-size: 2.4vh;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #000;
+}
+#intro ~ * {
+  visibility: hidden;
+}
+#intro a {
+  color: #fff;
+}
+#intro a:not(:hover) {
+  text-decoration: none;
+}
+#intro pre {
+  text-align: center;
+  color: #888;
+}
+#intro pre em {
+  font-style: normal;
+  color: #fff;
+}
+#intro pre i {
+  font-style: normal;
+  animation: fade 3s 1s alternate infinite both;
+}
+#intro pre em.blink {
+  color: #ff3;
+  animation: blink 3s alternate infinite both;
+}
+@keyframes blink {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade {
+  from {
+    color: #000;
+  }
+  to {
+    color: #c00;
+  }
+}
+#gameover {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 2em;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+#gameover table {
+  margin-bottom: 1.3em;
+}
+#gameover table th,
+#gameover table td {
+  padding: 0 1ch 1.3em 0;
+}
+#gameover table th,
+#gameover table .deliveries,
+#gameover table .kills,
+#gameover table .turns,
+#gameover table .time {
+  font-weight: normal;
+  color: #fff;
+}
+#gameover table .alive {
+  color: #0f0;
+}
+#gameover table .dead {
+  color: #f00;
+}
+@media (max-width: 1290px) {
+  body {
+    font-size: 18px;
+  }
+}
+@media (max-width: 1170px) {
+  body {
+    font-size: 16px;
+  }
+}
+@media (max-width: 1070px) {
+  body {
+    font-size: 15px;
+  }
+}
+@media (max-width: 960px) {
+  body {
+    font-size: 13px;
+  }
+}
