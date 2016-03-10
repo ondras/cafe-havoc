@@ -44,7 +44,7 @@ export default class Jenkins extends Being {
 		this._say("Understood?");
 		log.pause();
 
-		let badge = new Badge("damage");
+		let badge = new Badge("basic");
 		log.add("%S, hands you %a.", this, badge);
 		player.pickItem(badge);
 	

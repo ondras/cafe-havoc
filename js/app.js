@@ -1668,7 +1668,7 @@ System.register("entity/jenkins.js", ["./being.js", "entity/item/badge.js", "ui/
 						this._say("Understood?");
 						log.pause();
 
-						var badge = new Badge("damage");
+						var badge = new Badge("basic");
 						log.add("%S, hands you %a.", this, badge);
 						player.pickItem(badge);
 
@@ -3172,7 +3172,7 @@ System.register("level/level.js", ["./generator.js", "./decorator.js", "util/xy.
 					this.cells = {};
 					this.items = {};
 					this.beings = {};
-					this.rooms = generator(5 /*20*/);
+					this.rooms = generator(20);
 				}
 
 				_createClass(Level, [{

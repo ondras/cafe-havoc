@@ -35,7 +35,7 @@ export class Level {
 		this.cells = {};
 		this.items = {};
 		this.beings = {};
-		this.rooms = generator(5 /*20*/);
+		this.rooms = generator(20);
 	}
 	
 	getEntry() {

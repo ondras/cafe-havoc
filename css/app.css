@@ -24,7 +24,7 @@ footer {
 }
 * {
   box-sizing: inherit;
-  transition: opacity 1000ms;
+  transition: opacity 2000ms;
 }
 .hidden {
   opacity: 0;
