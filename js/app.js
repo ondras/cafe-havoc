@@ -1006,7 +1006,7 @@ System.register("entity/customer.js", ["./being.js", "util/command.js", "util/pu
 
 			SEXES = ["m", "f"];
 			NAMES = ["Smith", "Jones", "Blueberry", "Remington", "Hogwart", "Goobers", "Teapot", "Vandelay", "Smithers", "Jackson", "Claus", "Hummer", "Petrof", "Weinerslav", "Spaceman", "Hustler", "Zoidberg", "Wienerschnitzel", "Dipstick"];
-			JOB = ["astronaut", "accountant", "janitor", "librarian", "lumberjack", "consultant", "importer", "exporter", "magician", "counselor", "contractor", "archaeologist"];
+			JOB = ["astronaut", "accountant", "janitor", "librarian", "lumberjack", "consultant", "importer", "exporter", "magician", "counselor", "contractor", "archaeologist", "copywriter"];
 			ADJECTIVES = ["elderly", "retired", "good-looking", "young", "middle-aged", "attractive", "resigned", "weird-looking", "relaxed"];
 			HAPPY = ["I am happy and satisfied right now.", "There is nothing I need.", "No more orders."];
 			UNHAPPY = ["I am still waiting for my %s.", "I would like to order %a.", "Bring me %a, please."];

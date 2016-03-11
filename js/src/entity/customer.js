@@ -8,7 +8,7 @@ import * as ai from "ai.js";
 
 const SEXES = ["m", "f"];
 const NAMES = ["Smith", "Jones", "Blueberry", "Remington", "Hogwart", "Goobers", "Teapot", "Vandelay", "Smithers", "Jackson", "Claus", "Hummer", "Petrof", "Weinerslav", "Spaceman", "Hustler", "Zoidberg", "Wienerschnitzel", "Dipstick"];
-const JOB = ["astronaut", "accountant", "janitor", "librarian", "lumberjack", "consultant", "importer", "exporter", "magician", "counselor", "contractor", "archaeologist"];
+const JOB = ["astronaut", "accountant", "janitor", "librarian", "lumberjack", "consultant", "importer", "exporter", "magician", "counselor", "contractor", "archaeologist", "copywriter"];
 const ADJECTIVES = ["elderly", "retired", "good-looking", "young", "middle-aged", "attractive", "resigned", "weird-looking", "relaxed"];
 const HAPPY = ["I am happy and satisfied right now.", "There is nothing I need.", "No more orders."];
 const UNHAPPY = ["I am still waiting for my %s.", "I would like to order %a.", "Bring me %a, please."];
