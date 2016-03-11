@@ -72,7 +72,7 @@ function pickItem(item) {
 	uilog.pause();
 
 	log("You just picked up an item!",
-		"This means you can give it to somebody else.");
+		"This means you can give it to someone else.");
 	
 	log("All your items are available in the bottom menu.",
 		"Additionally, you can have one of them readied to be given away.",

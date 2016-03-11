@@ -3872,7 +3872,7 @@ System.register("tutorial.js", ["ui/log.js", "entity/library.js", "ui/bump.js", 
 
 		uilog.pause();
 
-		log("You just picked up an item!", "This means you can give it to somebody else.");
+		log("You just picked up an item!", "This means you can give it to someone else.");
 
 		log("All your items are available in the bottom menu.", "Additionally, you can have one of them readied to be given away.", "To give stuff away, do not forget to change your interaction mode to %c{#fff}g%c{}ive!");
 	}
