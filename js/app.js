@@ -4546,6 +4546,8 @@ System.register("util/keyboard.js", [], function (_export, _context) {
 			return;
 		}
 
+		e.preventDefault();
+
 		while (index-- > 0) {
 			var executed = available[index].func();
 			if (executed) {

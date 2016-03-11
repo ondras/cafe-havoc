@@ -50,6 +50,8 @@ function handler(e) {
 	let index = available.length;
 	if (!index) { return; }
 
+	e.preventDefault();
+
 	while (index --> 0) {
 		let executed = available[index].func();
 		if (executed) { return; }
